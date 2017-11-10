@@ -16,16 +16,16 @@ import android.telephony.PhoneNumberUtils
 import android.transition.ChangeBounds
 import android.view.Menu
 import com.tairoroberto.nextel.extension.loadImage
-import com.tairoroberto.nextel.home.model.Movie
+import com.tairoroberto.nextel.home.model.MovieDetail
 import com.tairoroberto.nextel.R
-import kotlinx.android.synthetic.main.activity_petshop_detail.*
-import kotlinx.android.synthetic.main.content_petshop_detail.*
+import kotlinx.android.synthetic.main.activity_movie_detail.*
+import kotlinx.android.synthetic.main.content_movie_detail.*
 import java.util.*
 
 
 class DetailActivity : AppCompatActivity() {
 
-    private var petShop: Movie? = null
+    private var petShop: MovieDetail? = null
     private var shareActionProvider: ShareActionProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_petshop_detail)
+        setContentView(R.layout.activity_movie_detail)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

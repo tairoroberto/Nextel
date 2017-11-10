@@ -1,18 +1,20 @@
 package com.tairoroberto.nextel.home.presenter
 
 import android.util.Log
-import com.tairoroberto.nextel.home.contract.DetailContract
-import com.tairoroberto.nextel.home.model.Movie
+import com.tairoroberto.nextel.extension.showSnackBarError
+import com.tairoroberto.nextel.home.contract.HomeContract
+import com.tairoroberto.nextel.home.model.MovieDetail
 import com.tairoroberto.nextel.home.model.HomeModel
+import kotlinx.android.synthetic.main.fragment_list_movies.*
 
 /**
  * Created by tairo on 8/15/17.
  */
-class HomePresenter : DetailContract.Presenter {
+class HomePresenter : HomeContract.Presenter {
 
-    private var view: DetailContract.View? = null
-    private var model: DetailContract.Model? = null
-    override fun attachView(view: DetailContract.View) {
+    private var view: HomeContract.View? = null
+    private var model: HomeContract.Model? = null
+    override fun attachView(view: HomeContract.View) {
         this.view = view
         this.model = HomeModel(this)
     }
@@ -21,21 +23,21 @@ class HomePresenter : DetailContract.Presenter {
         this.view = null
     }
 
-    override fun loadPetshops() {
-        model?.listarPetshops()
+    override fun loadMovies() {
+        model?.listMovies()
     }
 
     override fun manipulatePetshopsResponse(petshopsResponse: PetshopsResponse) {
         Log.i("LOG", "petshops ${petshopsResponse.petshops}")
 
         if (petshopsResponse.success) {
-            view?.showPetshopsList(petshopsResponse.petshops)
+            view?.showMoviesList(petshopsResponse.petshops)
         }
     }
 
-    override fun updatePetshop(petShop: Movie?) {
+    override fun updateMovie(petShop: MovieDetail?) {
         petShop?.favorite = true
-        model?.updatePetshop(petShop as Movie)
+        model?.updateMovie(petShop as MovieDetail)
     }
 
     override fun manipulateUpdatePetshopResponse(updatePetShopResponse: UpdatePetShopResponse) {

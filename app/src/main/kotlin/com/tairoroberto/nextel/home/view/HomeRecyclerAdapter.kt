@@ -9,7 +9,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import com.tairoroberto.nextel.extension.loadImage
-import com.tairoroberto.nextel.home.model.Movie
+import com.tairoroberto.nextel.home.model.MovieDetail
 import com.tairoroberto.nextel.R
 
 
@@ -17,7 +17,7 @@ import com.tairoroberto.nextel.R
  * Created by tairo on 8/22/17.
  */
 class HomeRecyclerAdapter(val context: Context,
-                          private var listPetshops: ArrayList<Movie>?,
+                          private var listPetshops: ArrayList<MovieDetail>?,
                           private val onClick: OnClick) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
@@ -56,7 +56,7 @@ class HomeRecyclerAdapter(val context: Context,
         private val textViewOpenClose: TextView = view.findViewById(R.id.textViewOpenClose)
         private val imageViewMenu: ImageView = view.findViewById(R.id.imageViewMenu)
 
-        fun bind(context: Context?, petShop: Movie, position: Int) {
+        fun bind(context: Context?, petShop: MovieDetail, position: Int) {
 
             imageView.loadImage(petShop.imageUrl)
             textViewTitle.text = petShop.name
@@ -64,7 +64,7 @@ class HomeRecyclerAdapter(val context: Context,
         }
     }
 
-    fun update(listPetshops: ArrayList<Movie>) {
+    fun update(listPetshops: ArrayList<MovieDetail>) {
         this.listPetshops?.clear()
         this.listPetshops?.addAll(listPetshops)
         notifyDataSetChanged()
