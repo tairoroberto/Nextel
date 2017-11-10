@@ -1,4 +1,4 @@
-package br.com.tairoroberto.nextel
+package com.tairoroberto.nextel
 
 import org.junit.Test
 

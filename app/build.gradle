@@ -135,6 +135,11 @@ dependencies {
     //Timber
     implementation  "com.jakewharton.timber:timber:${rootProject.timber}"
 
+    // Dependency injection
+    implementation "com.google.dagger:dagger:${rootProject.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.dagger}"
+    kapt "com.google.dagger:dagger-android-processor:${rootProject.dagger}"
+
     implementation "android.arch.persistence.room:runtime:${rootProject.arch}"
     kapt "android.arch.persistence.room:compiler:${rootProject.arch}"
 

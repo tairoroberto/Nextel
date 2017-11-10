@@ -1,12 +1,11 @@
-package br.com.tairoroberto.nextel
+package com.tairoroberto.nextel
 
 import android.content.Context
-import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
@@ -34,11 +33,13 @@ class MainActivity : AppCompatActivity() {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     // presenter.onSearchTextSubmitted(query)
+                    Log.i("LOG", "newText: $query")
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     //presenter.onSearchTextSubmitted(newText)
+                    Log.i("LOG", "newText: $newText")
                     return true
                 }
 
