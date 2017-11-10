@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="br.com.tairoroberto.nextel.MainActivity">
+    <item
+        android:id="@+id/search"
+        android:title="@android:string/search_go"
+        android:icon="@drawable/abc_ic_search_api_material"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.widget.SearchView"/>
+</menu>
