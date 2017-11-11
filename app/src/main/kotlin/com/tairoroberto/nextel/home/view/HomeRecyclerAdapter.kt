@@ -8,26 +8,26 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
-import com.tairoroberto.nextel.extension.loadImage
-import com.tairoroberto.nextel.home.model.MovieDetail
 import com.tairoroberto.nextel.R
+import com.tairoroberto.nextel.base.extension.loadImage
+import com.tairoroberto.nextel.home.model.Movie
 
 
 /**
  * Created by tairo on 8/22/17.
  */
-class HomeRecyclerAdapter(val context: Context,
-                          private var listPetshops: ArrayList<MovieDetail>?,
+class HomeRecyclerAdapter(val context: Context?,
+                          private var movies: ArrayList<Movie>?,
                           private val onClick: OnClick) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val petShop = listPetshops?.get(position)
-        if (petShop != null) {
-            holder.bind(context, petShop, position)
+        val movie = movies?.get(position)
+        if (movie != null) {
+            holder.bind(context, movie, position)
             holder.itemView.setOnClickListener({
-                onClick.onItemClick(petShop)
+                onClick.onItemClick(movie)
             })
         }
         setAnimation(holder.itemView, position)
@@ -35,7 +35,7 @@ class HomeRecyclerAdapter(val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(layoutInflater.inflate(R.layout.petshops_item, parent, false))
+        return ViewHolder(layoutInflater.inflate(R.layout.movie_item, parent, false))
     }
 
     private fun setAnimation(viewToAnimate: View, position: Int) {
@@ -47,7 +47,7 @@ class HomeRecyclerAdapter(val context: Context,
     }
 
     override fun getItemCount(): Int {
-        return listPetshops?.size as Int
+        return movies?.size as Int
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -56,17 +56,17 @@ class HomeRecyclerAdapter(val context: Context,
         private val textViewOpenClose: TextView = view.findViewById(R.id.textViewOpenClose)
         private val imageViewMenu: ImageView = view.findViewById(R.id.imageViewMenu)
 
-        fun bind(context: Context?, petShop: MovieDetail, position: Int) {
-
-            imageView.loadImage(petShop.imageUrl)
-            textViewTitle.text = petShop.name
-            textViewOpenClose.text = petShop.address
+        fun bind(context: Context?, movie: Movie, position: Int) {
+            imageView.loadImage(context?.getString(R.string.images_url, movie.posterPath))
+            textViewTitle.text = movie.title
+            textViewOpenClose.text = movie.overview
         }
     }
 
-    fun update(listPetshops: ArrayList<MovieDetail>) {
-        this.listPetshops?.clear()
-        this.listPetshops?.addAll(listPetshops)
+    fun update(movies: ArrayList<Movie>) {
+        this.movies?.clear()
+
+        this.movies?.addAll(movies)
         notifyDataSetChanged()
     }
 }

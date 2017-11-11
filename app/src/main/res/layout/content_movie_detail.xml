@@ -5,86 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".detail.DetailActivity"
+    tools:context=".detail.view.DetailActivity"
     tools:showIn="@layout/activity_movie_detail">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="br.com.tairoroberto.lovedogs.petshopdetail.PetShopDetailFragment">
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textViewAddress"
+            android:id="@+id/textViewName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dimen_16dp"
             android:layout_marginStart="@dimen/dimen_16dp"
             android:layout_marginTop="@dimen/dimen_24dp"
-            android:textSize="@dimen/dimen_14sp"
+            android:textSize="@dimen/dimen_24sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/sf_ui_text_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Av. Dr. Armando Colângelo, 1251 - Parque Rodrigo Barreto, Arujá - SP, 07432-575" />
+            tools:text="Thor: Ragnarok" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="open"
+            android:text="Votes:"
+            android:fontFamily="@font/sf_ui_text_regular"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            android:layout_marginLeft="16dp" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_16dp"
-            android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginTop="@dimen/dimen_4dp"
-            android:text="close"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/textViewOpen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/sf_ui_text_light"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/textViewClose"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAddress"
-            tools:text="08:00" />
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            tools:text="1209"
+            android:layout_marginLeft="8dp" />
+
 
         <TextView
-            android:id="@+id/textViewClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_16dp"
-            android:layout_marginStart="@dimen/dimen_8dp"
-            android:layout_marginTop="@dimen/dimen_4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:text="17:00"
-            android:layout_marginRight="@dimen/dimen_16dp"
-            android:layout_marginLeft="@dimen/dimen_8dp" />
-
-        <TextView
-            android:id="@+id/textViewDescription"
+            android:id="@+id/textViewOverview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/sf_ui_text_light"
             android:layout_marginEnd="@dimen/dimen_16dp"
             android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:text="teste"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:textSize="@dimen/dimen_14sp"
+            tools:text="Thor is imprisoned on the other side of the universe and finds himself in a race against time to get back to Asgard to stop Ragnarok, the destruction of his homeworld and the end of Asgardian civilization, at the hands of an all-powerful new threat, the ruthless Hela."
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewClose" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewOpen" />
 
 
         <ImageView
@@ -94,22 +77,24 @@
             android:layout_marginEnd="@dimen/dimen_8dp"
             android:layout_marginRight="@dimen/dimen_8dp"
             android:layout_marginTop="@dimen/dimen_8dp"
-            app:layout_constraintEnd_toStartOf="@+id/textViewPhone"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAddress"
-            android:src="@drawable/ic_more_vert_black_24dp" />
+            app:layout_constraintEnd_toStartOf="@+id/textViewReleaseDate"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            android:src="@drawable/ic_event_black_24dp" />
 
         <TextView
-            android:id="@+id/textViewPhone"
+            android:id="@+id/textViewReleaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="@dimen/dimen_16dp"
-            android:layout_marginRight="@dimen/dimen_16dp"
             android:layout_marginTop="@dimen/dimen_8dp"
             android:autoLink="phone"
+            android:fontFamily="@font/sf_ui_text_regular"
             android:textColorLink="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPhone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAddress"
-            tools:text="11952979157" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            tools:text="2017-10-25" />
 
     </android.support.constraint.ConstraintLayout>
 

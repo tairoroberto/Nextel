@@ -10,7 +10,7 @@ class BaseMVP {
 
     interface View {
         fun getContext(): Context
-        fun getActivity(): Activity
+        fun getActivity(): Activity?
     }
 
     interface Presenter<in V> {

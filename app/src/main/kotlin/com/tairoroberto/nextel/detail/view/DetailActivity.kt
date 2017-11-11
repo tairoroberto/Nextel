@@ -1,6 +1,8 @@
-package com.tairoroberto.nextel.detail
+package com.tairoroberto.nextel.detail.view
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -12,21 +14,22 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.ShareActionProvider
-import android.telephony.PhoneNumberUtils
 import android.transition.ChangeBounds
 import android.view.Menu
-import com.tairoroberto.nextel.extension.loadImage
 import com.tairoroberto.nextel.home.model.MovieDetail
 import com.tairoroberto.nextel.R
+import com.tairoroberto.nextel.base.extension.loadImage
+import com.tairoroberto.nextel.detail.contract.DetailContract
+import com.tairoroberto.nextel.detail.presenter.DetailPresenter
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.content_movie_detail.*
-import java.util.*
 
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), DetailContract.View {
 
-    private var petShop: MovieDetail? = null
+    private var movieDetail: MovieDetail? = null
     private var shareActionProvider: ShareActionProvider? = null
+    private var presenter: DetailContract.Presenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,43 +43,26 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie_detail)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        petShop = savedInstanceState?.getParcelable("petshop")
+        presenter = DetailPresenter()
+        presenter?.attachView(this)
 
-        if (intent.extras != null) {
-            petShop = intent.extras.getParcelable("petShop")
-        }
+        imageView.isDrawingCacheEnabled = true
 
-        imageViewPetShop.isDrawingCacheEnabled = true
-        imageViewPetShop.loadImage(petShop?.imageUrl)
-
-        textViewAddress.text = petShop?.address
-        textViewOpen.text = petShop?.open
-        textViewClose.text = petShop?.close
-        textViewDescription.text = petShop?.description
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            textViewPhone.text = PhoneNumberUtils.formatNumber(petShop?.phone, Locale.getDefault().country)
-        }
-
-        textViewPhone.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${petShop?.phone}")
-            startActivity(intent)
-        }
-
-        imageViewPhone.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${petShop?.phone}")
-            startActivity(intent)
-        }
-
-        fab.setOnClickListener {
-            val favorite = petShop?.favorite as Boolean
-
-            petShop?.favorite = !favorite
-        }
+        val movieId = intent.getIntExtra("movie_id", 0)
+        presenter?.loadMovie(movieId)
     }
+
+
+    override fun showMovie(movieDetail: MovieDetail?) {
+        imageView.loadImage(movieDetail?.posterPath)
+
+        textViewName.text = movieDetail?.originalTitle
+        textViewOpen.text = movieDetail?.voteCount.toString()
+        textViewOverview.text = movieDetail?.overview
+        textViewReleaseDate.text = movieDetail?.releaseDate
+        textViewRate.text = movieDetail?.voteAverage.toString()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -111,20 +97,28 @@ class DetailActivity : AppCompatActivity() {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "image/*"
 
-            val bitmap = imageViewPetShop.drawingCache
+            val bitmap = imageView.drawingCache
 
-            val bitmapPath = Images.Media.insertImage(contentResolver, bitmap, "image_petshop", null)
+            val bitmapPath = Images.Media.insertImage(contentResolver, bitmap, "image_movieDetail", null)
             val bitmapUri = Uri.parse(bitmapPath)
 
             shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "${petShop?.name} \n\n ${petShop?.address}")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "${movieDetail?.title} \n\n ${movieDetail?.overview}")
             shareActionProvider?.setShareIntent(shareIntent)
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        outState?.putParcelable("petshop", petShop)
+    override fun getContext(): Context {
+        return this
+    }
+
+    override fun getActivity(): Activity? {
+        return this
+    }
+
+    override fun onDestroy() {
+        presenter?.detachView()
+        super.onDestroy()
     }
 
     companion object {

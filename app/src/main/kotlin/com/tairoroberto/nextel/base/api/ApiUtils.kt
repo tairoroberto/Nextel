@@ -1,4 +1,4 @@
-package com.tairoroberto.nextel.api
+package com.tairoroberto.nextel.base.api
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import retrofit2.Retrofit
@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Created by tairo on 8/24/17.
  */
 object ApiUtils {
-    private val URL_BASE = "http://api.themoviedb.org/3/"
+    private val URL_BASE = "https://api.themoviedb.org/3/"
 
     fun getApiService(): Api? {
         return RetrofitClient.getRetrofit(URL_BASE)?.create(Api::class.java)

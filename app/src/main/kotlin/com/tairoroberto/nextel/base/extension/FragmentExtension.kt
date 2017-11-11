@@ -1,4 +1,4 @@
-package com.tairoroberto.nextel.extension
+package com.tairoroberto.nextel.base.extension
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

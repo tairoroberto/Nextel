@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".detail.DetailActivity">
+    tools:context=".detail.view.DetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -24,12 +24,12 @@
             app:toolbarId="@+id/toolbar">
 
             <ImageView
-                android:id="@+id/imageViewPetShop"
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_220dp"
+                android:layout_height="@dimen/dimen_300dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/animais"
-                android:transitionName="animais"/>
+                android:src="@drawable/mad_max"
+                android:transitionName="movie"/>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -50,13 +50,34 @@
 
     <include layout="@layout/content_movie_detail" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        android:src="@drawable/ic_favorite_border_black_24dp"/>
+        android:layout_margin="@dimen/fab_margin"
+        android:elevation="@dimen/dimen_10dp"
+        app:layout_anchorGravity="bottom|end">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/textViewRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dimen_10dp"
+            android:layout_gravity="center"
+            android:text="5.2"
+            android:fontFamily="@font/sf_ui_text_light"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_anchor="@id/app_bar"
+            app:layout_anchorGravity="bottom|end" />
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

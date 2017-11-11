@@ -1,7 +1,7 @@
 package com.tairoroberto.nextel.home.contract
 
-import android.support.v4.app.FragmentActivity
 import br.com.tairoroberto.lovedogs.base.BaseMVP
+import com.tairoroberto.nextel.home.model.Movie
 import com.tairoroberto.nextel.home.model.MovieDetail
 import com.tairoroberto.nextel.home.model.MovieResponse
 
@@ -13,12 +13,10 @@ class HomeContract {
     interface Model {
         fun listMovies()
         fun searchMovie(query: String)
-        fun searchMovieById(id : Int)
     }
 
     interface View : BaseMVP.View {
-        fun getAtivity() : FragmentActivity?
-        fun showMoviesList(movies: ArrayList<MovieDetail>)
+        fun showMoviesList(movies: List<Movie>?)
         fun updateList(movieDetail: MovieDetail)
     }
 
@@ -26,7 +24,6 @@ class HomeContract {
         fun loadMovies()
         fun manipulateMovieResponse(movieResponse: MovieResponse)
         fun showError(str: String)
-        fun updateMovie(movieDetail: MovieDetail?)
-        fun manipulateUpdateMovieResponse(updateResponse: String)
+        fun searchMovies(query: String)
     }
 }

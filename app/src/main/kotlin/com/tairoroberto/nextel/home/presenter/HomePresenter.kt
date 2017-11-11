@@ -1,10 +1,10 @@
 package com.tairoroberto.nextel.home.presenter
 
 import android.util.Log
-import com.tairoroberto.nextel.extension.showSnackBarError
+import com.tairoroberto.nextel.base.extension.showSnackBarError
 import com.tairoroberto.nextel.home.contract.HomeContract
-import com.tairoroberto.nextel.home.model.MovieDetail
 import com.tairoroberto.nextel.home.model.HomeModel
+import com.tairoroberto.nextel.home.model.MovieResponse
 import kotlinx.android.synthetic.main.fragment_list_movies.*
 
 /**
@@ -27,28 +27,17 @@ class HomePresenter : HomeContract.Presenter {
         model?.listMovies()
     }
 
-    override fun manipulatePetshopsResponse(petshopsResponse: PetshopsResponse) {
-        Log.i("LOG", "petshops ${petshopsResponse.petshops}")
+    override fun manipulateMovieResponse(movieResponse: MovieResponse) {
+        Log.i("LOG", "movie ${movieResponse.results}")
 
-        if (petshopsResponse.success) {
-            view?.showMoviesList(petshopsResponse.petshops)
-        }
-    }
-
-    override fun updateMovie(petShop: MovieDetail?) {
-        petShop?.favorite = true
-        model?.updateMovie(petShop as MovieDetail)
-    }
-
-    override fun manipulateUpdatePetshopResponse(updatePetShopResponse: UpdatePetShopResponse) {
-        if (updatePetShopResponse.success) {
-            view?.updateList(updatePetShopResponse.petShop)
-        } else {
-            view?.getActivity()?.showSnackBarError(view?.getActivity()?.recyclerViewPets!!, "Falha ao adicionar favorito :( ")
-        }
+        view?.showMoviesList(movieResponse.results)
     }
 
     override fun showError(str: String) {
-        view?.getActivity()?.showSnackBarError(view?.getActivity()?.recyclerViewPets!!, str)
+        view?.getActivity()?.showSnackBarError(view?.getActivity()?.recyclerView!!, str)
+    }
+
+    override fun searchMovies(query: String) {
+        model?.searchMovie(query)
     }
 }

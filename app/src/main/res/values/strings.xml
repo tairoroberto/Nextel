@@ -11,5 +11,5 @@
     <string name="api_sample">
         https://api.themoviedb.org/3/movie/550?api_key=6413f09c0280e9b760d6d91b2933f43f
     </string>
-    <string name="images_url">https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg</string>
+    <string name="images_url">https://image.tmdb.org/t/p/w500/%s</string>
 </resources>
