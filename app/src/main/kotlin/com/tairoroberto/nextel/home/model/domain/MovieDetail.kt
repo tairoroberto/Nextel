@@ -1,4 +1,4 @@
-package com.tairoroberto.nextel.home.model
+package com.tairoroberto.nextel.home.model.domain
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -14,7 +14,7 @@ data class MovieDetail(@SerializedName("original_language")
                        val video: Boolean = false,
 
                        @SerializedName("title")
-                       val title: String = "",
+                       var title: String = "",
 
                        @SerializedName("backdrop_path")
                        val backdropPath: String = "",
@@ -32,7 +32,7 @@ data class MovieDetail(@SerializedName("original_language")
                        val productionCountries: List<ProductionCountriesItem>? = null,
 
                        @SerializedName("id")
-                       val id: Int = 0,
+                       var id: Int = 0,
 
                        @SerializedName("vote_count")
                        val voteCount: Int = 0,
@@ -44,12 +44,12 @@ data class MovieDetail(@SerializedName("original_language")
                        val overview: String = "",
 
                        @SerializedName("original_title")
-                       val originalTitle: String = "",
+                       var originalTitle: String = "",
 
                        val runtime: Int = 0,
 
                        @SerializedName("poster_path")
-                       val posterPath: String = "",
+                       var posterPath: String = "",
 
                        @SerializedName("spoken_languages")
                        val spokenLanguages: List<SpokenLanguagesItem>? = null,
@@ -58,10 +58,10 @@ data class MovieDetail(@SerializedName("original_language")
                        val productionCompanies: List<ProductionCompaniesItem>? = null,
 
                        @SerializedName("release_date")
-                       val releaseDate: String = "",
+                       var releaseDate: String = "",
 
                        @SerializedName("vote_average")
-                       val voteAverage: Double = 0.0,
+                       var voteAverage: Double = 0.0,
 
                        @SerializedName("belongs_to_collection")
                        val belongsToCollection: BelongsToCollection? = null,

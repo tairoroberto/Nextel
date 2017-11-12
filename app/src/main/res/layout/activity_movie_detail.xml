@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_300dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/mad_max"
                 android:transitionName="movie"/>
 
             <ImageView
@@ -37,6 +36,12 @@
                 android:layout_gravity="bottom"
                 android:layout_marginTop="0dp"
                 app:srcCompat="@drawable/gradient_black" />
+
+            <ProgressBar
+                android:id="@+id/progressImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -49,35 +54,5 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_movie_detail" />
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/app_bar"
-        android:layout_margin="@dimen/fab_margin"
-        android:elevation="@dimen/dimen_10dp"
-        app:layout_anchorGravity="bottom|end">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            />
-
-        <TextView
-            android:id="@+id/textViewRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="@dimen/dimen_10dp"
-            android:layout_gravity="center"
-            android:text="5.2"
-            android:fontFamily="@font/sf_ui_text_light"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_anchor="@id/app_bar"
-            app:layout_anchorGravity="bottom|end" />
-    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

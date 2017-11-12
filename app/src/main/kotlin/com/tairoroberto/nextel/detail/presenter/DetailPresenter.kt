@@ -4,7 +4,7 @@ import android.util.Log
 import com.tairoroberto.nextel.base.extension.showSnackBarError
 import com.tairoroberto.nextel.detail.contract.DetailContract
 import com.tairoroberto.nextel.detail.model.DetailModel
-import com.tairoroberto.nextel.home.model.MovieDetail
+import com.tairoroberto.nextel.home.model.domain.MovieDetail
 import kotlinx.android.synthetic.main.fragment_list_movies.*
 
 /**
@@ -35,6 +35,6 @@ class DetailPresenter : DetailContract.Presenter {
     }
 
     override fun showError(str: String) {
-        view?.getActivity()?.showSnackBarError(view?.getActivity()?.recyclerView!!, str)
+        view?.showSnackBarError(str)
     }
 }

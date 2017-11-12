@@ -17,17 +17,21 @@ import android.support.v7.widget.SearchView
 import android.transition.ChangeBounds
 import android.util.Log
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.tairoroberto.nextel.R
+import com.tairoroberto.nextel.base.extension.isConected
+import com.tairoroberto.nextel.base.extension.showProgress
+import com.tairoroberto.nextel.base.extension.showSnackBarError
 import com.tairoroberto.nextel.detail.view.DetailActivity
 import com.tairoroberto.nextel.home.contract.HomeContract
-import com.tairoroberto.nextel.home.model.Movie
-import com.tairoroberto.nextel.home.model.MovieDetail
+import com.tairoroberto.nextel.home.model.domain.Movie
+import com.tairoroberto.nextel.home.model.domain.MovieDetail
 import com.tairoroberto.nextel.home.presenter.HomePresenter
-import kotlinx.android.synthetic.main.fragment_list_movies.*
-import kotlinx.android.synthetic.main.movie_item.*
-import org.jetbrains.anko.startActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -35,10 +39,12 @@ import org.jetbrains.anko.startActivity
 class HomeFragment : Fragment(), HomeContract.View, OnClick {
 
     private val presenter: HomeContract.Presenter = HomePresenter()
-    var listMovies: ArrayList<Movie>? = ArrayList()
-    var adapter: HomeRecyclerAdapter? = null
-    var recyclerView: RecyclerView? = null
-    var swipeRefreshLayout: SwipeRefreshLayout? = null
+    private var listMovies: ArrayList<Movie>? = ArrayList()
+    private var adapter: HomeRecyclerAdapter? = null
+    private var recyclerView: RecyclerView? = null
+    private var swipeRefreshLayout: SwipeRefreshLayout? = null
+    private var progress: ProgressBar? = null
+    private var withoutData: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +60,7 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val changeBounds =  ChangeBounds()
+            val changeBounds = ChangeBounds()
             changeBounds.duration = 2000
             activity?.window?.sharedElementExitTransition = changeBounds
         }
@@ -64,20 +70,37 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
         val layoutManager = LinearLayoutManager(activity)
         recyclerView = view?.findViewById(R.id.recyclerView)
         swipeRefreshLayout = view?.findViewById(R.id.swipeRefreshLayout)
+        progress = view?.findViewById(R.id.progress)
+        withoutData = view?.findViewById(R.id.withoutData)
 
         recyclerView?.layoutManager = layoutManager
         recyclerView?.setHasFixedSize(true)
-
-        presenter.loadMovies()
-
         adapter = HomeRecyclerAdapter(activity, listMovies, this)
         recyclerView?.adapter = adapter
-
         swipeRefreshLayout?.setOnRefreshListener({
-            presenter.loadMovies()
+            loadMovies()
         })
 
+        showProgress(true)
+        loadMovies()
+
         return view
+    }
+
+    private fun loadMovies() {
+        if (activity?.isConected() == true) {
+            presenter.loadMovies()
+        } else {
+            presenter.loadMoviesFromBD()
+        }
+    }
+
+    override fun showProgress(b: Boolean) {
+        activity?.showProgress(recyclerView, progress, b)
+    }
+
+    override fun showSnackBarError(str: String) {
+        activity?.showSnackBarError(recyclerView,str)
     }
 
     override fun showMoviesList(movies: List<Movie>?) {
@@ -87,28 +110,31 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
             listMovie.add(it)
         }
 
+        withoutData?.visibility = GONE
+        if (listMovie.isEmpty()) {
+            withoutData?.visibility = VISIBLE
+        }
+
         adapter?.update(listMovie)
         swipeRefreshLayout?.isRefreshing = false
+        showProgress(false)
     }
 
-    override fun onItemClick(movie: Movie) {
+    override fun onItemClick(movie: Movie, imageView: ImageView) {
+        val movieDetail = MovieDetail()
+        movieDetail.id = movie.idMovie
+        movieDetail.title = movie.title
+        movieDetail.originalTitle = movie.originalTitle
+        movieDetail.posterPath = movie.posterPath
+        movieDetail.releaseDate = movie.releaseDate
+        movieDetail.voteAverage = movie.voteAverage
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(activity as Activity,
-                Pair.create(imageView, "movie"))
+                .makeSceneTransitionAnimation(context as Activity, Pair.create(imageView, "movie"))
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra("movie_id", movie.id)
-            intent.putExtras(options.toBundle())
-            startActivity(intent)
-        } else {
-            activity?.startActivity<DetailActivity>("movie_id" to movie.id)
-        }
-    }
-
-    override fun updateList(movieDetail: MovieDetail) {
-        Toast.makeText(activity, "${movieDetail.originalTitle} adicionado aos favoritos :)", Toast.LENGTH_SHORT).show()
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra("movieDetail", movieDetail)
+        context.startActivity(intent, options.toBundle())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

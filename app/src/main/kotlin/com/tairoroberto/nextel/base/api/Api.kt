@@ -1,7 +1,7 @@
 package com.tairoroberto.nextel.base.api
 
-import com.tairoroberto.nextel.home.model.MovieDetail
-import com.tairoroberto.nextel.home.model.MovieResponse
+import com.tairoroberto.nextel.home.model.domain.MovieDetail
+import com.tairoroberto.nextel.home.model.domain.MovieResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path

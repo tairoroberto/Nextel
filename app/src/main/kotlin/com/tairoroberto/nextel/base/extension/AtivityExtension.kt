@@ -3,46 +3,57 @@ package com.tairoroberto.nextel.base.extension
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
+import android.content.Context
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
+import android.net.NetworkInfo
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.net.ConnectivityManager
+
+
 
 
 /**
  * Created by tairo on 9/2/17.
  */
-fun AppCompatActivity.showProgress(form: View, progressBar: ProgressBar, show: Boolean) {
+fun Activity.showProgress(form: View?, progressBar: ProgressBar?, show: Boolean) {
     val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
-    form.visibility = if (show) View.GONE else View.VISIBLE
-    form.animate()
-            .setDuration(shortAnimTime)
-            .alpha((if (show) 0 else 1).toFloat())
-            .setListener(object : AnimatorListenerAdapter() {
+    form?.visibility = if (show) View.GONE else View.VISIBLE
+    form?.animate()
+            ?.setDuration(shortAnimTime)
+            ?.alpha((if (show) 0 else 1).toFloat())
+            ?.setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     form.visibility = if (show) View.GONE else View.VISIBLE
                 }
             })
 
-    progressBar.visibility = if (show) View.VISIBLE else View.GONE
-    progressBar.animate()
-            .setDuration(shortAnimTime)
-            .alpha((if (show) 1 else 0).toFloat())
-            .setListener(object : AnimatorListenerAdapter() {
+    progressBar?.visibility = if (show) View.VISIBLE else View.GONE
+    progressBar?.animate()
+            ?.setDuration(shortAnimTime)
+            ?.alpha((if (show) 1 else 0).toFloat())
+            ?.setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     progressBar.visibility = if (show) View.VISIBLE else View.GONE
                 }
             })
 }
 
-fun Activity.showSnackBarError(view: View, msg: String) {
-    val snackbar: Snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
+fun Activity.showSnackBarError(view: View?, msg: String) {
+    val snackbar: Snackbar = Snackbar.make(view as View, msg, Snackbar.LENGTH_LONG)
             .setAction("OK", null)
     snackbar.view.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_light))
     snackbar.show()
+}
+
+fun Activity.isConected(): Boolean {
+    val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val netInfo = cm.activeNetworkInfo
+    return netInfo != null && netInfo.isConnectedOrConnecting
 }
 
 fun Activity.hideKeyboard() {

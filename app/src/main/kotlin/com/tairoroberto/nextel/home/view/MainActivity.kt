@@ -1,8 +1,8 @@
-package com.tairoroberto.nextel
+package com.tairoroberto.nextel.home.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.tairoroberto.nextel.home.view.HomeFragment
+import com.tairoroberto.nextel.R
 
 class MainActivity : AppCompatActivity() {
 

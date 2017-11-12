@@ -1,4 +1,4 @@
-package com.tairoroberto.nextel.home.model
+package com.tairoroberto.nextel.home.model.domain
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -10,7 +10,7 @@ data class BelongsToCollection(@SerializedName("backdrop_path")
                                @SerializedName("name")
                                val name: String = "",
 
-                               @SerializedName("id")
+                               @SerializedName("idMovie")
                                val id: Int = 0,
 
                                @SerializedName("poster_path")

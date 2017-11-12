@@ -1,7 +1,7 @@
 package com.tairoroberto.nextel.detail.contract
 
 import br.com.tairoroberto.lovedogs.base.BaseMVP
-import com.tairoroberto.nextel.home.model.MovieDetail
+import com.tairoroberto.nextel.home.model.domain.MovieDetail
 
 /**
  * Created by tairo on 8/15/17.
@@ -14,6 +14,7 @@ class DetailContract {
 
     interface View : BaseMVP.View {
         fun showMovie(movieDetail: MovieDetail?)
+        fun showSnackBarError(msg:String)
     }
 
     interface Presenter : BaseMVP.Presenter<View> {

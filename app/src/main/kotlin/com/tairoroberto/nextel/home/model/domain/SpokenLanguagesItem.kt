@@ -1,4 +1,4 @@
-package com.tairoroberto.nextel.home.model
+package com.tairoroberto.nextel.home.model.domain
 
 import android.os.Parcel
 import android.os.Parcelable

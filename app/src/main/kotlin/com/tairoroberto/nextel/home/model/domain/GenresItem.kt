@@ -1,10 +1,10 @@
-package com.tairoroberto.nextel.home.model
+package com.tairoroberto.nextel.home.model.domain
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-data class ProductionCompaniesItem(
+data class GenresItem(
         @SerializedName("name")
         val name: String = "",
 
@@ -24,12 +24,12 @@ data class ProductionCompaniesItem(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ProductionCompaniesItem> {
-        override fun createFromParcel(parcel: Parcel): ProductionCompaniesItem {
-            return ProductionCompaniesItem(parcel)
+    companion object CREATOR : Parcelable.Creator<GenresItem> {
+        override fun createFromParcel(parcel: Parcel): GenresItem {
+            return GenresItem(parcel)
         }
 
-        override fun newArray(size: Int): Array<ProductionCompaniesItem?> {
+        override fun newArray(size: Int): Array<GenresItem?> {
             return arrayOfNulls(size)
         }
     }

@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.tairoroberto.nextel.R
 import com.tairoroberto.nextel.base.extension.loadImage
-import com.tairoroberto.nextel.home.model.Movie
+import com.tairoroberto.nextel.home.model.domain.Movie
 
 
 /**
@@ -27,7 +28,7 @@ class HomeRecyclerAdapter(val context: Context?,
         if (movie != null) {
             holder.bind(context, movie, position)
             holder.itemView.setOnClickListener({
-                onClick.onItemClick(movie)
+                onClick.onItemClick(movie, holder.imageView)
             })
         }
         setAnimation(holder.itemView, position)
@@ -51,15 +52,15 @@ class HomeRecyclerAdapter(val context: Context?,
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val imageView: ImageView = view.findViewById(R.id.imageView)
-        private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
-        private val textViewOpenClose: TextView = view.findViewById(R.id.textViewOpenClose)
-        private val imageViewMenu: ImageView = view.findViewById(R.id.imageViewMenu)
+        val imageView: ImageView = view.findViewById(R.id.imageView)
+        val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
+        val textViewOverview: TextView = view.findViewById(R.id.textViewOverview)
+        private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
 
         fun bind(context: Context?, movie: Movie, position: Int) {
-            imageView.loadImage(context?.getString(R.string.images_url, movie.posterPath))
+            imageView.loadImage(context?.getString(R.string.images_url, movie.posterPath), progressImage)
             textViewTitle.text = movie.title
-            textViewOpenClose.text = movie.overview
+            textViewOverview.text = movie.overview
         }
     }
 
