@@ -1,17 +1,13 @@
 package com.tairoroberto.nextel.base.extension
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import com.squareup.picasso.*
+import com.squareup.picasso.Callback
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 import com.tairoroberto.nextel.R
-import okhttp3.Cache
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import java.io.IOException
-import com.tairoroberto.nextel.R.id.imageView
 
 
 /**
@@ -25,25 +21,21 @@ fun ImageView.loadImage(url: String?, progress: ProgressBar?) {
             .networkPolicy(NetworkPolicy.OFFLINE)
             .into(this, object : Callback {
                 override fun onSuccess() {
-                    Log.v("Picasso", "fetch image success in first time.")
                     progress?.visibility = View.GONE
                 }
 
                 override fun onError() {
                     progress?.visibility = View.VISIBLE
                     //Try again online if cache failed
-                    Log.v("Picasso", "Could not fetch image in first time...")
                     Picasso.with(context).load(url).networkPolicy(NetworkPolicy.NO_CACHE)
                             .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(R.drawable.nextel)
                             .into(this@loadImage, object : Callback {
 
                                 override fun onSuccess() {
-                                    Log.v("Picasso", "fetch image success in try again.")
                                     progress?.visibility = View.GONE
                                 }
 
                                 override fun onError() {
-                                    Log.v("Picasso", "Could not fetch image again...")
                                     progress?.visibility = View.VISIBLE
                                 }
                             })
