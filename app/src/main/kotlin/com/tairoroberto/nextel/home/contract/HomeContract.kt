@@ -1,13 +1,14 @@
 package com.tairoroberto.nextel.home.contract
 
 import android.app.Activity
+import android.arch.lifecycle.LiveData
 import android.content.Context
 import br.com.tairoroberto.lovedogs.base.BaseMVP
 import com.tairoroberto.nextel.home.model.domain.Movie
 import com.tairoroberto.nextel.home.model.domain.MovieResponse
 
 /**
- * Created by tairo on 8/15/17.
+ * Created by tairo on 12/12/17.
  */
 class HomeContract {
 

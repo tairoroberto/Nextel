@@ -1,5 +1,6 @@
 package com.tairoroberto.nextel.detail.contract
 
+import android.content.Context
 import br.com.tairoroberto.lovedogs.base.BaseMVP
 import com.tairoroberto.nextel.home.model.domain.MovieDetail
 
@@ -21,5 +22,6 @@ class DetailContract {
         fun loadMovie(id: Int)
         fun manipulateMovieResponse(movieDetail: MovieDetail?)
         fun showError(str: String)
+        fun getContext(): Context?
     }
 }

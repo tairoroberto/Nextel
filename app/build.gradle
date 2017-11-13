@@ -141,10 +141,10 @@ dependencies {
     // Dependency injection
     implementation "com.google.dagger:dagger:${rootProject.dagger}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    kapt "com.google.dagger:dagger-compiler:${rootProject.dagger}"
-    kapt "com.google.dagger:dagger-android-processor:${rootProject.dagger}"
 
     implementation "android.arch.persistence.room:runtime:${rootProject.arch}"
+    implementation "android.arch.persistence.room:rxjava2:${rootProject.arch}"
+    implementation "android.arch.persistence.room:testing:${rootProject.arch}"
     kapt "android.arch.persistence.room:compiler:${rootProject.arch}"
 
     implementation "android.arch.lifecycle:runtime:${rootProject.arch_lifecycle}"
@@ -183,6 +183,8 @@ dependencies {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
     implementation "com.android.support.test.espresso:espresso-idling-resource:${rootProject.espresso}"
+
+    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:2.1.3"
 
     androidTestImplementation "android.arch.core:core-testing:${rootProject.arch}"
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:${rootProject.dexmaker}"

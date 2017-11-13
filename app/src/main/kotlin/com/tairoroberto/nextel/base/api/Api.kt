@@ -13,11 +13,11 @@ import retrofit2.http.Query
 interface Api {
 
     @GET("discover/movie")
-    fun getMovies(@Query("vote_average.gte") voteAverage: String , @Query("api_key") apiKey: String): Observable<MovieResponse>
+    fun getMovies(@Query("vote_average.gte") voteAverage: String, @Query("api_key") apiKey: String?): Observable<MovieResponse>
 
     @GET("search/movie")
-    fun search(@Query("query") query: String, @Query("api_key") apiKey: String): Observable<MovieResponse>
+    fun search(@Query("query") query: String, @Query("api_key") apiKey: String?): Observable<MovieResponse>
 
     @GET("movie/{id}")
-    fun searchById(@Path("id") movieId: Int, @Query("api_key") apiKey: String): Observable<MovieDetail>
+    fun searchById(@Path("id") movieId: Int, @Query("api_key") apiKey: String?): Observable<MovieDetail>
 }

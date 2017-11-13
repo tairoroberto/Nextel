@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 
 /**
- * Created by tairo on 9/9/17.
+ * Created by tairo on 11/12/17.
  */
 fun Fragment.showProgress(form: View?, progressBar: ProgressBar?, show: Boolean) {
     val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()

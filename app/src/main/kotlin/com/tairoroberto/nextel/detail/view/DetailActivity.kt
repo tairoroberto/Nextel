@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.content_movie_detail.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.yesButton
 
-
 class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     private var shareActionProvider: ShareActionProvider? = null
@@ -35,12 +34,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val changeBounds = ChangeBounds()
-            changeBounds.duration = 2000
-            window.sharedElementExitTransition = changeBounds
-        }
-
+        setAnimation()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
         setSupportActionBar(toolbar)
@@ -49,26 +43,31 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         presenter?.attachView(this)
 
         imageView.isDrawingCacheEnabled = true
-
         val movieDetail = intent.getParcelableExtra<MovieDetail>("movieDetail")
 
         presenter?.loadMovie(movieDetail.id)
         showMovie(movieDetail)
 
-        fab.setOnClickListener {
-            showAlertDialog(movieDetail)
+        fab.setOnClickListener { showAlertDialog(movieDetail) }
+    }
+
+    private fun setAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val changeBounds = ChangeBounds()
+            changeBounds.duration = 2000
+            window.sharedElementExitTransition = changeBounds
         }
     }
 
     private fun showAlertDialog(movieDetail: MovieDetail) {
-       alert {
-           title = "Vote"
-           message = "Vote for this movie is disable :( \nThe actual note for this movie is \n${movieDetail.voteAverage}"
+        alert {
+            title = "Vote"
+            message = "Vote for this movie is disable :( \nThe actual note for this movie is \n${movieDetail.voteAverage}"
 
-           yesButton {
-               title = "OK"
-           }
-       }.show()
+            yesButton {
+                title = "OK"
+            }
+        }.show()
     }
 
 

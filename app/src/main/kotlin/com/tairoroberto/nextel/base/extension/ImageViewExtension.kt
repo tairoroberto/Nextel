@@ -11,7 +11,7 @@ import com.tairoroberto.nextel.R
 
 
 /**
- * Created by tairo on 9/2/17.
+ * Created by tairo on 11/12/17.
  */
 
 fun ImageView.loadImage(url: String?, progress: ProgressBar?) {

@@ -1,25 +1,23 @@
 package com.tairoroberto.nextel.home.presenter
 
 import android.app.Activity
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.content.Context
-import android.util.Log
-import com.tairoroberto.nextel.base.extension.showSnackBarError
 import com.tairoroberto.nextel.home.contract.HomeContract
 import com.tairoroberto.nextel.home.model.AppDatabase
 import com.tairoroberto.nextel.home.model.domain.HomeModel
 import com.tairoroberto.nextel.home.model.domain.Movie
 import com.tairoroberto.nextel.home.model.domain.MovieResponse
-import kotlinx.android.synthetic.main.fragment_list_movies.*
 import org.jetbrains.anko.doAsync
 
 /**
- * Created by tairo on 8/15/17.
+ * Created by tairo on 12/12/17.
  */
-class HomePresenter : HomeContract.Presenter {
+class HomePresenter(application: Application) : AndroidViewModel(application), HomeContract.Presenter {
 
     private var view: HomeContract.View? = null
     private var model: HomeContract.Model? = null
-
 
     override fun attachView(view: HomeContract.View) {
         this.view = view
@@ -36,8 +34,6 @@ class HomePresenter : HomeContract.Presenter {
     }
 
     override fun manipulateMovieResponse(movieResponse: MovieResponse) {
-        Log.i("LOG", "movie ${movieResponse.results}")
-
         view?.getActivity()?.doAsync {
             AppDatabase.getInstance(view?.getContext()).movieDAO().insertAll(movieResponse.results)
         }
@@ -46,8 +42,6 @@ class HomePresenter : HomeContract.Presenter {
     }
 
     override fun manipulateMovieResponseDB(movies: List<Movie>?) {
-        Log.i("LOG", "movie $movies")
-
         view?.showMoviesList(movies)
     }
 

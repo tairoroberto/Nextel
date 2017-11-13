@@ -2,6 +2,7 @@ package com.tairoroberto.nextel.home.view
 
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -15,7 +16,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.transition.ChangeBounds
-import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -38,7 +38,7 @@ import com.tairoroberto.nextel.home.presenter.HomePresenter
  */
 class HomeFragment : Fragment(), HomeContract.View, OnClick {
 
-    private val presenter: HomeContract.Presenter = HomePresenter()
+    private var presenter: HomeContract.Presenter? = null
     private var listMovies: ArrayList<Movie>? = ArrayList()
     private var adapter: HomeRecyclerAdapter? = null
     private var recyclerView: RecyclerView? = null
@@ -48,23 +48,19 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.attachView(this)
+        presenter = ViewModelProviders.of(this).get(HomePresenter::class.java)
+        presenter?.attachView(this)
         setHasOptionsMenu(true)
     }
 
     override fun onDestroy() {
-        presenter.detachView()
+        presenter?.detachView()
         super.onDestroy()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val changeBounds = ChangeBounds()
-            changeBounds.duration = 2000
-            activity?.window?.sharedElementExitTransition = changeBounds
-        }
-
+        setAnimation()
         val view: View? = inflater.inflate(R.layout.fragment_list_movies, container, false)
 
         val layoutManager = LinearLayoutManager(activity)
@@ -77,9 +73,7 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
         recyclerView?.setHasFixedSize(true)
         adapter = HomeRecyclerAdapter(activity, listMovies, this)
         recyclerView?.adapter = adapter
-        swipeRefreshLayout?.setOnRefreshListener({
-            loadMovies()
-        })
+        swipeRefreshLayout?.setOnRefreshListener({ loadMovies() })
 
         showProgress(true)
         loadMovies()
@@ -87,11 +81,19 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
         return view
     }
 
+    private fun setAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val changeBounds = ChangeBounds()
+            changeBounds.duration = 2000
+            activity?.window?.sharedElementExitTransition = changeBounds
+        }
+    }
+
     private fun loadMovies() {
         if (activity?.isConected() == true) {
-            presenter.loadMovies()
+            presenter?.loadMovies()
         } else {
-            presenter.loadMoviesFromBD()
+            presenter?.loadMoviesFromBD()
         }
     }
 
@@ -100,15 +102,13 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
     }
 
     override fun showSnackBarError(str: String) {
-        activity?.showSnackBarError(recyclerView,str)
+        activity?.showSnackBarError(recyclerView, str)
     }
 
     override fun showMoviesList(movies: List<Movie>?) {
         val listMovie: ArrayList<Movie> = ArrayList()
 
-        movies?.forEach {
-            listMovie.add(it)
-        }
+        movies?.forEach { listMovie.add(it) }
 
         withoutData?.visibility = GONE
         if (listMovie.isEmpty()) {
@@ -150,18 +150,14 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                presenter.searchMovies(query)
-                Log.i("LOG", "onQueryTextSubmit: $query")
+                presenter?.searchMovies(query)
                 hideSoftKeyboard()
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                //presenter.onSearchTextSubmitted(newText)
-                Log.i("LOG", "onQueryTextChange: $newText")
                 return true
             }
-
         })
         MenuItemCompat.setOnActionExpandListener(menu?.findItem(R.id.search),
                 object : MenuItemCompat.OnActionExpandListener {

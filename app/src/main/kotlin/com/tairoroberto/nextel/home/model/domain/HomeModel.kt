@@ -1,6 +1,7 @@
 package com.tairoroberto.nextel.home.model.domain
 
 import android.util.Log
+import com.tairoroberto.nextel.R
 import com.tairoroberto.nextel.base.api.ApiUtils
 import com.tairoroberto.nextel.home.contract.HomeContract
 import com.tairoroberto.nextel.home.model.AppDatabase
@@ -9,11 +10,11 @@ import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 
 /**
- * Created by tairo on 8/15/17.
+ * Created by tairo on 12/11/17.
  */
 class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Model {
     override fun listMovies() {
-        ApiUtils.getApiService()?.getMovies("5", "6413f09c0280e9b760d6d91b2933f43f")
+        ApiUtils.getApiService()?.getMovies("5", presenter.getContext()?.getString(R.string.api_v3_auth))
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
@@ -25,7 +26,7 @@ class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Mo
     }
 
     override fun searchMovie(query: String) {
-        ApiUtils.getApiService()?.search(query, "6413f09c0280e9b760d6d91b2933f43f")
+        ApiUtils.getApiService()?.search(query, presenter.getContext()?.getString(R.string.api_v3_auth))
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({

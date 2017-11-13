@@ -4,20 +4,16 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
+import android.net.ConnectivityManager
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
-import android.net.NetworkInfo
-import android.content.Context.CONNECTIVITY_SERVICE
-import android.net.ConnectivityManager
-
-
 
 
 /**
- * Created by tairo on 9/2/17.
+ * Created by tairo on 11/12/17.
  */
 fun Activity.showProgress(form: View?, progressBar: ProgressBar?, show: Boolean) {
     val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()

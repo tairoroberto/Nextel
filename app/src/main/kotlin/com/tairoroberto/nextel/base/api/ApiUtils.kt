@@ -1,14 +1,13 @@
 package com.tairoroberto.nextel.base.api
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import retrofit2.Retrofit
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 /**
- * Created by tairo on 8/24/17.
+ * Created by tairo on 11/12/17.
  */
 object ApiUtils {
     private val URL_BASE = "https://api.themoviedb.org/3/"

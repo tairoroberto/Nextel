@@ -1,5 +1,6 @@
 package com.tairoroberto.nextel.detail.presenter
 
+import android.content.Context
 import android.util.Log
 import com.tairoroberto.nextel.base.extension.showSnackBarError
 import com.tairoroberto.nextel.detail.contract.DetailContract
@@ -8,7 +9,7 @@ import com.tairoroberto.nextel.home.model.domain.MovieDetail
 import kotlinx.android.synthetic.main.fragment_list_movies.*
 
 /**
- * Created by tairo on 8/15/17.
+ * Created by tairo on 12/12/17.
  */
 class DetailPresenter : DetailContract.Presenter {
 
@@ -36,5 +37,9 @@ class DetailPresenter : DetailContract.Presenter {
 
     override fun showError(str: String) {
         view?.showSnackBarError(str)
+    }
+
+    override fun getContext(): Context? {
+        return view?.getContext()
     }
 }

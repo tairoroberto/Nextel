@@ -15,7 +15,7 @@ import com.tairoroberto.nextel.home.model.domain.Movie
 
 
 /**
- * Created by tairo on 8/22/17.
+ * Created by tairo on 12/12/17.
  */
 class HomeRecyclerAdapter(val context: Context?,
                           private var movies: ArrayList<Movie>?,
